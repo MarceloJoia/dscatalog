@@ -2,7 +2,7 @@
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/MarceloJoia/dscatalog/blob/main/LICENSE)
 
 # Sobre o projeto
-
+Catalogo de produtos desenvolvido na imersão Spring Boot, com orientação do professor Nélio Aves.
 
 
 ## Layout mobile
