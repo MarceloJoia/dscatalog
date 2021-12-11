@@ -6,10 +6,8 @@
 
 
 ## Layout mobile
-![Mobile Home](https://github.com/MarceloJoia/dscatalog/blob/main/assets/ds-catalog-9-home.png) 
-![Mobile Catalog](https://github.com/MarceloJoia/dscatalog/blob/main/assets/ds-catalog-10-catalog.png)
-![Mobile Single](https://github.com/MarceloJoia/dscatalog/blob/main/assets/ds-catalog-11-single.png)
-![Mobile Login](https://github.com/MarceloJoia/dscatalog/blob/main/assets/ds-catalog-12-login.png)
+![Mobile Home](https://github.com/MarceloJoia/dscatalog/blob/main/assets/ds-catalog-9-home.png)![Mobile Catalog](https://github.com/MarceloJoia/dscatalog/blob/main/assets/ds-catalog-10-catalog.png)
+![Mobile Single](https://github.com/MarceloJoia/dscatalog/blob/main/assets/ds-catalog-11-single.png)![Mobile Login](https://github.com/MarceloJoia/dscatalog/blob/main/assets/ds-catalog-12-login.png)
 
 ## Layout web
 ![Web Home](https://github.com/MarceloJoia/dscatalog/blob/main/assets/ds-catalog-1-home.jpg)
@@ -34,15 +32,18 @@
 ## Back end
 Pré-requisitos: Java 11
 
+
 # clonar repositório
+
+```bash
 https://github.com/MarceloJoia/dscatalog.git
+```
 
 # entrar na pasta do projeto back end
 cd backend
 
 # executar o projeto
 ./mvnw spring-boot:run
-
 
 
 # Autor
