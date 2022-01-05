@@ -35,9 +35,6 @@ public class ProductResourceIT {
 	private long nonExistingId;
 	private long countTotalProducts;
 	
-	private ProductDTO productDTO;
-	
-
 	@BeforeEach
 	void setUp() throws Exception {
 		existingId = 1L;
@@ -60,18 +57,15 @@ public class ProductResourceIT {
 		result.andExpect(jsonPath("$.content[2].name").value("PC Gamer Alfa"));
 	}
 	
-	
-	
-	
-	
 	@Test
 	public void updateShouldReturnProductDTOWhenIdExists() throws Exception {
 		ProductDTO productDTO = Factory.createProductDTO();
 		//Convert to String "JSon"
 		String jsonBody = objectMapper.writeValueAsString(productDTO);
 		
-		//Expect this value after update
+		//Save the name in: “expectedName”, to test if it has changed.
 		String expectedName = productDTO.getName();
+		//Save the description in: “expectedDescription”, to test if it has changed.
 		String expectedDescription = productDTO.getDescription();
 
 		ResultActions result = 
@@ -86,4 +80,17 @@ public class ProductResourceIT {
 		result.andExpect(jsonPath("$.description").value(expectedDescription));//check if the description has been changed
 	}
 
+	@Test
+	public void updateShouldReturnNotFoundWhenIdDoesNotExist () throws Exception {
+		ProductDTO productDTO = Factory.createProductDTO();
+		String jsonBody = objectMapper.writeValueAsString(productDTO);
+	
+		ResultActions result = 
+				mockMvc.perform(put("/products/{id}", nonExistingId)
+						.content(jsonBody)
+						.contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON));
+		
+		result.andExpect(status().isNotFound());
+	}
 }
