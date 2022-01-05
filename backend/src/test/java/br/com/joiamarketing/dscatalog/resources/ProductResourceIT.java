@@ -1,6 +1,7 @@
 package br.com.joiamarketing.dscatalog.resources;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -14,10 +15,18 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.com.joiamarketing.dscatalog.dto.ProductDTO;
+import br.com.joiamarketing.dscatalog.tests.Factory;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
 public class ProductResourceIT {
+	
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -25,6 +34,9 @@ public class ProductResourceIT {
 	private long existingId;
 	private long nonExistingId;
 	private long countTotalProducts;
+	
+	private ProductDTO productDTO;
+	
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -46,6 +58,32 @@ public class ProductResourceIT {
 		result.andExpect(jsonPath("$.content[0].name").value("Macbook Pro"));
 		result.andExpect(jsonPath("$.content[1].name").value("PC Gamer"));
 		result.andExpect(jsonPath("$.content[2].name").value("PC Gamer Alfa"));
+	}
+	
+	
+	
+	
+	
+	@Test
+	public void updateShouldReturnProductDTOWhenIdExists() throws Exception {
+		ProductDTO productDTO = Factory.createProductDTO();
+		//Convert to String "JSon"
+		String jsonBody = objectMapper.writeValueAsString(productDTO);
+		
+		//Expect this value after update
+		String expectedName = productDTO.getName();
+		String expectedDescription = productDTO.getDescription();
+
+		ResultActions result = 
+				mockMvc.perform(put("/products/{id}", existingId)
+						.content(jsonBody)
+						.contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON));
+		
+		result.andExpect(status().isOk());
+		result.andExpect(jsonPath("$.id").value(existingId));//check if the id exists
+		result.andExpect(jsonPath("$.name").value(expectedName));//check if the name has been changed
+		result.andExpect(jsonPath("$.description").value(expectedDescription));//check if the description has been changed
 	}
 
 }
